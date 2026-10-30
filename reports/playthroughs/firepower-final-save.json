@@ -1,0 +1,455 @@
+{
+  "version": 1,
+  "revision": 3,
+  "bonds": {
+    "0:1": 3,
+    "0:2": 1,
+    "0:3": 3,
+    "0:4": 1,
+    "0:5": 3,
+    "1:2": 1,
+    "1:3": 4,
+    "1:4": 1,
+    "1:5": 4,
+    "2:3": 1,
+    "2:4": 1,
+    "2:5": 1,
+    "3:4": 1,
+    "3:5": 4,
+    "4:5": 1,
+    "5:10": 1
+  },
+  "covert": null,
+  "threat": {
+    "region": 0,
+    "left": 1,
+    "kind": "Swarming tide"
+  },
+  "modifier": null,
+  "notice": "Countered Swarming tide",
+  "seed": 1006667447,
+  "day": 10,
+  "material": 20,
+  "signal": 49,
+  "stability": 0,
+  "successes": 5,
+  "tech": [
+    "Pressure lattice",
+    "Acoustic masking",
+    "Deep coordinates"
+  ],
+  "research": null,
+  "regions": [
+    {
+      "name": "North Atlantic",
+      "code": "NA-01",
+      "site": "Kestrel Platform",
+      "lat": 43,
+      "lon": -35,
+      "type": "containment",
+      "risk": 2,
+      "id": 0,
+      "level": 3,
+      "lost": false
+    },
+    {
+      "name": "Norwegian Sea",
+      "code": "NS-02",
+      "site": "Station Halcyon",
+      "lat": 66,
+      "lon": 3,
+      "type": "rescue",
+      "risk": 1,
+      "id": 1,
+      "level": 6,
+      "lost": true
+    },
+    {
+      "name": "Indian Ocean",
+      "code": "IO-03",
+      "site": "The Pelagic Array",
+      "lat": -20,
+      "lon": 75,
+      "type": "recon",
+      "risk": 2,
+      "id": 2,
+      "level": 6,
+      "lost": true
+    },
+    {
+      "name": "South Pacific",
+      "code": "SP-04",
+      "site": "Morrow Listening Post",
+      "lat": -30,
+      "lon": -132,
+      "type": "survival",
+      "risk": 1,
+      "id": 3,
+      "level": 6,
+      "lost": true
+    },
+    {
+      "name": "Philippine Trench",
+      "code": "PT-05",
+      "site": "Orpheus Anchorage",
+      "lat": 16,
+      "lon": 130,
+      "type": "sabotage",
+      "risk": 2,
+      "id": 4,
+      "level": 5,
+      "lost": false
+    },
+    {
+      "name": "Southern Ocean",
+      "code": "SO-06",
+      "site": "Whitewake Station",
+      "lat": -57,
+      "lon": 15,
+      "type": "extraction",
+      "risk": 1,
+      "id": 5,
+      "level": 6,
+      "lost": true
+    }
+  ],
+  "soldiers": [
+    {
+      "id": 0,
+      "name": "Mara Voss",
+      "call": "KEEL",
+      "role": "Anchor",
+      "xp": 9,
+      "kills": 3,
+      "wounds": 0,
+      "dead": true,
+      "gear": "Capacitor",
+      "perk": "Precision",
+      "bond": null
+    },
+    {
+      "id": 1,
+      "name": "Eli Okafor",
+      "call": "PATCH",
+      "role": "Medic",
+      "xp": 12,
+      "kills": 4,
+      "wounds": 0,
+      "dead": true,
+      "gear": "Standard",
+      "perk": "Precision",
+      "bond": null,
+      "doctrine": "Surgeon"
+    },
+    {
+      "id": 2,
+      "name": "Jun Park",
+      "call": "RIPTIDE",
+      "role": "Diver",
+      "xp": 4,
+      "kills": 2,
+      "wounds": 0,
+      "dead": true,
+      "gear": "Standard",
+      "perk": null,
+      "bond": null
+    },
+    {
+      "id": 3,
+      "name": "Ines Duarte",
+      "call": "RELAY",
+      "role": "Engineer",
+      "xp": 14,
+      "kills": 6,
+      "wounds": 0,
+      "dead": true,
+      "gear": "Standard",
+      "perk": "Precision",
+      "bond": null,
+      "doctrine": "Demolition"
+    },
+    {
+      "id": 4,
+      "name": "Sasha Moroz",
+      "call": "ECHO",
+      "role": "Scout",
+      "xp": 4,
+      "kills": 2,
+      "wounds": 0,
+      "dead": true,
+      "gear": "Standard",
+      "perk": null,
+      "bond": null
+    },
+    {
+      "id": 5,
+      "name": "Noah Vale",
+      "call": "GHOST",
+      "role": "Marksman",
+      "xp": 29,
+      "kills": 19,
+      "wounds": 0,
+      "dead": true,
+      "gear": "Capacitor",
+      "perk": "Precision",
+      "bond": null,
+      "doctrine": "Deadeye"
+    },
+    {
+      "id": 6,
+      "name": "Tala Quinn",
+      "call": "DIVER 6",
+      "role": "Anchor",
+      "xp": 3,
+      "kills": 3,
+      "wounds": 0,
+      "dead": true,
+      "gear": "Standard",
+      "perk": null,
+      "bond": null
+    },
+    {
+      "id": 7,
+      "name": "Ren Fischer",
+      "call": "DIVER 7",
+      "role": "Medic",
+      "xp": 2,
+      "kills": 2,
+      "wounds": 0,
+      "dead": true,
+      "gear": "Standard",
+      "perk": null,
+      "bond": null
+    },
+    {
+      "id": 8,
+      "name": "Amir Sato",
+      "call": "DIVER 8",
+      "role": "Diver",
+      "xp": 2,
+      "kills": 2,
+      "wounds": 0,
+      "dead": true,
+      "gear": "Standard",
+      "perk": null,
+      "bond": null
+    },
+    {
+      "id": 9,
+      "name": "Nia Strand",
+      "call": "DIVER 9",
+      "role": "Engineer",
+      "xp": 2,
+      "kills": 2,
+      "wounds": 0,
+      "dead": true,
+      "gear": "Standard",
+      "perk": null,
+      "bond": null
+    },
+    {
+      "id": 10,
+      "name": "Leo Beck",
+      "call": "DIVER 10",
+      "role": "Scout",
+      "xp": 4,
+      "kills": 2,
+      "wounds": 0,
+      "dead": true,
+      "gear": "Standard",
+      "perk": null,
+      "bond": null
+    },
+    {
+      "id": 11,
+      "name": "Suri Chen",
+      "call": "DIVER 11",
+      "role": "Marksman",
+      "xp": 0,
+      "kills": 0,
+      "wounds": 0,
+      "dead": true,
+      "gear": "Standard",
+      "perk": null,
+      "bond": null
+    },
+    {
+      "id": 12,
+      "name": "Tala Quinn",
+      "call": "DIVER 12",
+      "role": "Anchor",
+      "xp": 0,
+      "kills": 0,
+      "wounds": 0,
+      "dead": false,
+      "gear": "Standard",
+      "perk": null,
+      "bond": null
+    },
+    {
+      "id": 13,
+      "name": "Ren Fischer",
+      "call": "DIVER 13",
+      "role": "Medic",
+      "xp": 0,
+      "kills": 0,
+      "wounds": 0,
+      "dead": false,
+      "gear": "Standard",
+      "perk": null,
+      "bond": null
+    }
+  ],
+  "nextId": 14,
+  "mission": null,
+  "history": [
+    {
+      "day": 8,
+      "success": false,
+      "type": "descent",
+      "region": "South Pacific",
+      "evacuated": 0,
+      "lost": [
+        "GHOST",
+        "DIVER 10",
+        "DIVER 11"
+      ],
+      "reward": [
+        8,
+        4
+      ],
+      "turns": 6,
+      "title": "Operation lost"
+    },
+    {
+      "day": 7,
+      "success": true,
+      "type": "containment",
+      "region": "North Atlantic",
+      "evacuated": 2,
+      "lost": [
+        "DIVER 9"
+      ],
+      "reward": [
+        34,
+        16
+      ],
+      "turns": 7,
+      "title": "Operation complete"
+    },
+    {
+      "day": 6,
+      "success": false,
+      "type": "containment",
+      "region": "North Atlantic",
+      "evacuated": 0,
+      "lost": [
+        "RELAY",
+        "DIVER 7",
+        "DIVER 8"
+      ],
+      "reward": [
+        8,
+        4
+      ],
+      "turns": 10,
+      "title": "Operation lost"
+    },
+    {
+      "day": 5,
+      "success": false,
+      "type": "extraction",
+      "region": "Southern Ocean",
+      "evacuated": 1,
+      "lost": [
+        "PATCH",
+        "DIVER 6"
+      ],
+      "reward": [
+        8,
+        4
+      ],
+      "turns": 15,
+      "title": "Operation lost"
+    },
+    {
+      "day": 4,
+      "success": true,
+      "type": "sabotage",
+      "region": "Philippine Trench",
+      "evacuated": 3,
+      "lost": [
+        "KEEL"
+      ],
+      "reward": [
+        38,
+        14
+      ],
+      "turns": 10,
+      "title": "Operation complete"
+    },
+    {
+      "day": 3,
+      "success": true,
+      "type": "survival",
+      "region": "South Pacific",
+      "evacuated": 4,
+      "lost": [],
+      "reward": [
+        36,
+        18
+      ],
+      "turns": 7,
+      "title": "Operation complete"
+    },
+    {
+      "day": 2,
+      "success": true,
+      "type": "containment",
+      "region": "North Atlantic",
+      "evacuated": 4,
+      "lost": [
+        "RIPTIDE",
+        "ECHO"
+      ],
+      "reward": [
+        34,
+        16
+      ],
+      "turns": 9,
+      "title": "Operation complete"
+    },
+    {
+      "day": 1,
+      "success": true,
+      "type": "sabotage",
+      "region": "Philippine Trench",
+      "evacuated": 6,
+      "lost": [],
+      "reward": [
+        38,
+        14
+      ],
+      "turns": 6,
+      "title": "Operation complete"
+    }
+  ],
+  "ending": "defeat",
+  "report": {
+    "success": false,
+    "type": "descent",
+    "region": "South Pacific",
+    "evacuated": 0,
+    "lost": [
+      "GHOST",
+      "DIVER 10",
+      "DIVER 11"
+    ],
+    "reward": [
+      8,
+      4
+    ],
+    "turns": 6,
+    "title": "Operation lost"
+  }
+}

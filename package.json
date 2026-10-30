@@ -1,0 +1,1 @@
+{"name":"abyssline","version":"0.2.1","private":true,"type":"module","scripts":{"start":"node server.mjs","test":"node --test tests/*.test.mjs","build":"node build.mjs","playthroughs":"node tests/playthroughs.mjs"}}

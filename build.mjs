@@ -1,0 +1,23 @@
+// Dependency-free packaging for a file:// compatible, completely offline build.
+import {readFile,writeFile} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+const root=path.dirname(fileURLToPath(import.meta.url));
+const read=p=>readFile(path.join(root,p),'utf8');
+let three=await read('vendor/three.module.js');
+const exportBlock=three.match(/export\s*\{([^}]+)\};?\s*$/);
+if(!exportBlock)throw Error('Unexpected Three.js module format');
+const exported=exportBlock[1].split(',').map(s=>s.trim()).filter(Boolean).map(s=>{const parts=s.split(/\s+as\s+/);return parts.length===2?parts[1]+':'+parts[0]:parts[0]}).join(',');
+three='const THREE=(()=>{'+three.slice(0,exportBlock.index)+'\nreturn {'+exported+'};})();';
+let engine=await read('src/engine.js');
+const engineNames=[...engine.matchAll(/export (?:const|function|class)\s+(\w+)/g)].map(m=>m[1]);
+engine='const E=(()=>{'+engine.replace(/export /g,'')+'\nreturn {'+engineNames.join(',')+'};})();';
+let view=await read('src/view.js');
+view=view.replace(/import \* as THREE[^\n]+\n/,'').replace(/import (\{[^}]+\}) from[^;]+;/,'const $1=E;').replace('export class View','class View');
+view='const View=(()=>{'+view+'\nreturn View;})();';
+const app=(await read('src/app.js')).replace(/^import [^\n]+\n/gm,'');
+const script='(()=>{\n'+three+'\n'+engine+'\n'+view+'\n'+app+'\n})();';
+const css=await read('style.css');
+const html=(await read('index.html')).replace('<link rel="stylesheet" href="style.css">',()=>'<style>'+css+'</style>').replace('<script type="module" src="src/app.js"></script>',()=>'<script>'+script.replace(/<\/script/gi,'<\\/script')+'</script>');
+await writeFile(path.join(root,'ABYSSLINE.html'),html);
+console.log('Created ABYSSLINE.html: '+Math.round(Buffer.byteLength(html)/1024)+' KB; no runtime network dependencies.');

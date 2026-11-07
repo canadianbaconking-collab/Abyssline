@@ -1,6 +1,17 @@
-# ABYSSLINE v0.2.1: three additional playthroughs
+# Campaign analysis: three automated playthroughs
 
-Completed October 1, 2026. The three predeclared campaign seeds were 101, 202, and 303. Outcomes: two victories and one defeat.
+[Documentation](../../docs/README.md) · [Reproduction commands](../../docs/development.md#reproduce-the-three-recorded-campaigns)
+
+**Historical results · v0.2.1 · October 1, 2026.** Seeds 101, 202, and 303 produced two victories and one defeat. These were automated engine campaigns using normal public actions.
+
+## Read this first
+
+- **Observed:** both winning campaigns lost many operators; the firepower rush lost four regions and the campaign.
+- **Observed:** more Signal did not shorten the research schedule. All three policies entered final descent on cycle 8.
+- **Interpretation:** regional containment, squad readiness, and noise management deserve attention alongside damage output.
+- **Limit:** different seeds and multiple policy differences make these descriptive cases, not a controlled strategy comparison or a player win-rate estimate.
+
+**Jump to:** [Method](#what-was-actually-tested) · [Comparison](#comparison) · [Run records](#individual-campaign-records) · [Findings](#what-these-outcomes-say-about-the-game) · [Recommendations](#suggested-priorities-for-a-later-revision) · [Evidence and limits](#evidence-reproducibility-and-limits)
 
 ## What was actually tested
 
@@ -36,7 +47,13 @@ This is three new distinct campaign runs, bringing the distinct full-campaign se
 | Countered / expired threats | 2 / 1 | 8 / 0 | 1 / 2 |
 | Recovery-only cycles | 0 | 0 | 1 |
 
-## Run 1: Containment first
+## Individual campaign records
+
+Expand a run for its policy, turning points, and per-operation table.
+
+<details>
+<summary>Run 1: Containment first</summary>
+
 
 The policy ranked breach urgency first, used the threatened region as a tie preference, kept at least five deployable operators, and funded unattended level-5 regions when affordable. It researched Acoustic masking, Pressure lattice, then Deep coordinates. Initial Anchor plating traded movement for durability.
 
@@ -59,7 +76,11 @@ Seven operators died, all to hostile attacks: three to Brutes and four to Drifte
 | 7 | Southern Ocean / Emergency extraction  | 12 | 4 / 5 | DIVER 7 | 91 |
 | 8 | North Atlantic / Final descent  | 12 | 3 / 5 | ECHO, DIVER 9 | 94 |
 
-## Run 2: Research and counter-threats
+</details>
+
+<details>
+<summary>Run 2: Research and counter-threats</summary>
+
 
 The policy favored Recon Signal and counter-threat regions, sent KEEL on a two-cycle Signal watch immediately, started with five operators, and used a Scout Silencer. It researched Acoustic masking, Abyssal physiology, then Deep coordinates, and later bought an Engineer Rebreather.
 
@@ -84,7 +105,11 @@ Ten operators died, seven to Brutes and three to Drifters. No player flood or sa
 | 7 | Indian Ocean / Recon  | 8 | 4 / 5 | DIVER 9 | 89 |
 | 8 | South Pacific / Final descent  | 9 | 3 / 5 | DIVER 7, DIVER 10 | 77 |
 
-## Run 3: Firepower rush
+</details>
+
+<details>
+<summary>Run 3: Firepower rush</summary>
+
 
 The policy favored Material rewards, researched Pressure lattice before Acoustic masking, bought Capacitors for the Marksman and Anchor, used aggressive depth charges, and accepted a three-person deployment threshold. It purchased only one emergency containment intervention.
 
@@ -112,6 +137,8 @@ The lost final descent was premature: coordinates were ready, but squad composit
 | 8 | South Pacific / Final descent (failed) | 6 | 0 / 3 | GHOST, DIVER 10, DIVER 11 | 9 |
 
 Cycle 9 was recovery only: two new recruits could not meet the three-person minimum. Stability fell from 9 to 0 and the campaign ended.
+
+</details>
 
 ## What these outcomes say about the game
 
@@ -172,12 +199,13 @@ The two winning campaigns covered all six normal mission types plus final descen
 
 Each strategy reached its ending with no rejected actions. Save validation ran after every public tactical/strategic action, mission start, and return to command. Final campaign saves are importable through the game menu, and the raw records include pre/post resources, rosters, regional state, decision reasons, shot chances/results, hostile events, full retained action logs, objective state, and final saves.
 
-Run again from the workspace root:
+Run again from the repository root. This replaces the tracked JSON records and ending saves; the analysis and chart remain historical:
 
 ```powershell
-node outputs/abyssline/tests/playthroughs.mjs
+Set-Location -LiteralPath 'C:\dev\playground\abyssline'
+node tests/playthroughs.mjs
 ```
 
-Production engine SHA-256: `b4be88420cb9cc95dffaaeeedcfc1569c373a6e081e4f5898c7c3841d5411b72`.
+Production engine SHA-256 recorded for these runs: `b4be88420cb9cc95dffaaeeedcfc1569c373a6e081e4f5898c7c3841d5411b72`.
 
-Files beside this report: `campaign-records.json`, `campaign-outcomes.png`, `containment-final-save.json`, `research-final-save.json`, and `firepower-final-save.json`. Reproducer: `outputs/abyssline/tests/playthroughs.mjs`.
+Files beside this report: [action records](campaign-records.json), [outcome chart](campaign-outcomes.png), and importable ending saves for [containment](containment-final-save.json), [research](research-final-save.json), and [firepower](firepower-final-save.json). Reproducer: [`tests/playthroughs.mjs`](../../tests/playthroughs.mjs).

@@ -1,84 +1,60 @@
 # ABYSSLINE
 
-Recovered Windows workspace: `C:\dev\playground\abyssline`. See [WORKSPACE.md](WORKSPACE.md) for recovery details, PowerShell commands, source review, and Git backups.
+**Command six specialists through a deep-ocean containment crisis.** Choose which regions to protect, complete turn-based operations, and bring your team home before the ocean overwhelms the network.
 
-A playable single-player tactical campaign about managing a deep-ocean containment crisis. Version 0.2.1 removes fatigue and fixes campaign, combat, movement, and save-import bugs. The game includes a complete command → deployment → objective → extraction → progression loop with victory and defeat endings.
+Version **0.2.1** is a playable single-player prototype with a complete campaign, six regular mission types, and a final descent. It runs locally in a desktop browser with WebGL. A mouse and keyboard are recommended.
 
-## Play
+![Tactical view of ABYSSLINE](docs/screenshots/abyssline-v02-tactical.png)
+*Screenshot from v0.2; some interface details have changed.*
 
-Open **ABYSSLINE.html** in a desktop browser with WebGL enabled. Everything is embedded; no installation or network connection is needed. A mouse and keyboard are recommended. The layout also adapts to smaller windows.
+## Play in three steps
 
-For development, run `node server.mjs` in this folder, then open **http://127.0.0.1:4173**. No npm install is required. Set the `PORT` environment variable if needed.
+1. [Download the repository ZIP](https://github.com/canadianbaconking-collab/Abyssline/archive/refs/heads/main.zip) and extract it.
+2. Open **ABYSSLINE.html** from the extracted folder in your browser. No installation, account, or internet connection is required to play.
+3. Follow [Your first operation](docs/guides/first-operation.md): start research, deploy to North Atlantic, seal both valves, and extract your operators.
 
-The game autosaves after each action in the browser. Use **☰ → Export save file** for a portable backup. Saves belong to the browser and origin: use Export/Import when moving between the offline file and localhost. A blocked browser storage setting may prevent autosaving; export manually in that case.
+The GitHub file page displays source code; download the game before opening it. If the scene cannot render, enable browser hardware acceleration and check WebGL support.
 
-## Your first operation
+## What you do
 
-1. Start **Acoustic masking** in Research to reduce noise buildup.
-2. In Command, select a region and prepare deployment. You begin with six specialists.
-3. Select an operator with the bottom roster or keys **1–6**. Click a highlighted tile to move: blue costs one action, gold costs two. You can also use arrow keys to position the tile cursor and Space to move.
-4. Click a visible hostile to inspect its hit chance, then Fire. Firing ends that operator’s turn, so move first. Exposed enemies have a 35% critical chance for +2 damage. Flanking avoids directional cover. Tall structures block line of sight.
-5. Move adjacent to each objective and Interact. The Engineer can Remote link from four tiles away with line of sight.
-6. Return to the green landing zone. **Every operator extracts individually for one action.** Complete the objective and return at least one operator to win. Anyone left behind at the deadline or when abandoning the operation is lost.
+At **Command**, spend Material on equipment, recruits, or emergency containment. Spend Signal on research. Choose a region: helping one gives the others time to deteriorate.
 
-## Controls
+In an **operation**, each specialist has two action points. Move into position, use cover and class abilities, secure the objective, then return to the green extraction zone. Enemy reinforcements continue arriving; eliminating every hostile is unnecessary.
 
-| Control | Action |
+Back at **Command**, recover from injuries, develop veterans, and respond to regional threats. Complete two foundational research projects, finish Deep coordinates, and win three operations to unlock the final descent.
+
+**Extraction is individual.** Each operator must reach the green zone and use **Extract**. A completed objective and one survivor can earn a victory while the rest of the squad is lost.
+
+## Find what you need
+
+| I want to… | Read |
 |---|---|
-| Left click | Select a soldier or hostile; move to a floor tile |
-| 1–6 | Select squad member |
-| Arrow keys, Space | Position tile cursor, then move |
-| F | Fire at selected hostile |
-| G | Overwatch: spend remaining actions for one reaction shot |
-| R | Reload three rounds for one action |
-| B | Brace: reduce incoming damage by two until next turn |
-| V | Specialist ability (Suppress ends the turn) |
-| T | Transfer one action to a bonded partner, once per pair per mission |
-| Contact → Depth charge | Preview and confirm a limited explosive |
-| I | Interact with an adjacent objective |
-| X | Extract from the landing zone |
-| Enter | End turn (or activate a focused button) |
-| Q / E | Rotate camera |
-| Scroll / right drag | Zoom / orbit |
-| ? | Full field manual |
+| Learn while playing my first mission | [First operation](docs/guides/first-operation.md) |
+| Look up controls, classes, missions, or campaign rules | [Player guide](docs/guides/player-guide.md) |
+| Save my campaign or solve a launch problem | [Saves and troubleshooting](docs/guides/player-guide.md#saves-and-troubleshooting) |
+| Run, test, or change the game | [Development guide](docs/development.md) |
+| Understand the design and possible next steps | [Design notes](WOTC-REVISION.md) |
+| Browse reports, PDFs, and project history | [Documentation index](docs/README.md) |
 
-## Connected systems
+## Keep your campaign
 
-- **Strategy:** six regions, escalating breaches, Material, Signal, Stability, four research projects, equipment purchases, reserve roster, recruitment, injury recovery, persistent kills and XP, bonds, Signal watch assignments, timed regional counter-threats, and class doctrines at 8 XP.
-- **Combat:** two actions per operator with attacks ending the turn, concealed insertions, enemy-group activation, flanking criticals, limited cover-destroying depth charges, six specialist roles, ammunition, directional cover, line of sight, team visibility, sonar, overwatch, suppression, healing, noise thresholds, reinforcements, cyclic flooding, and individual extraction.
-- **Containment:** sealing valves reduces noise and flood damage.
-- **Reconnaissance:** downloads create a loud broadcast that reveals contacts.
-- **Rescue:** civilians move independently toward extraction and can be hurt by nearby enemies.
-- **Emergency extraction:** wounded divers move more slowly than ordinary civilians.
-- **Sabotage:** planted charges explode after two hostile phases; clear a two-tile radius.
-- **Holdout:** defend a relay through five hostile phases. Engineers can repair it.
-- **Final descent:** research Deep coordinates after two prior projects, win three operations, then override three anchors and return from a more dangerous mission.
+The game autosaves in your browser. Use **☰ → Export save file** for a portable backup, then **Import save file** to restore it. Browser storage can differ between a downloaded file, another browser, and a local server. Export before switching or starting a new campaign.
 
-Each completed or failed operation advances one strategic cycle. Advancing without deploying also heals injuries and progresses research, but escalates every region. At breach level 4–5, unattended regions drain Stability; at level 6 they are permanently lost. Emergency containment costs Material to reduce breach and recover Stability. Choosing where to act is the central campaign tradeoff.
+## Run the source
 
-## Revision notes
+For development, use Node.js; there are no npm dependencies to install. From PowerShell:
 
-See [WOTC-REVISION.md](WOTC-REVISION.md) for the source-linked analysis, design decisions, implemented systems, and remaining differences from XCOM 2: War of the Chosen.
+```powershell
+Set-Location -LiteralPath 'C:\dev\playground'
+git clone https://github.com/canadianbaconking-collab/Abyssline.git abyssline
+Set-Location -LiteralPath '.\abyssline'
+node server.mjs
+```
 
-Old saves migrate automatically, keeping campaign and mission progress. Legacy fatigue fields are discarded. New insertions use concealment except Holdout and final descent. The save storage key remains unchanged.
+Open [http://127.0.0.1:4173](http://127.0.0.1:4173). If you already have a checkout, skip the clone and use the [development commands](docs/development.md#daily-workflow).
 
-Operators can deploy repeatedly without an accuracy penalty. Wounds, reserve status, and Signal watch assignments determine availability. The roster holds 12. After two shared returns, a pair can bond in Personnel. At 8 XP each class chooses one of two permanent doctrines. Signal watch takes one operator away for two cycles and earns 18 Signal + 2 XP.
+## Project scope
 
-The flagged region prevents the named enemy modifier if its mission is won before the countdown expires. Otherwise the next two operations receive the modifier. The briefing shows the consequence. Standard regional escalation still applies.
+The prototype uses procedural low-poly environments, two enemy archetypes, and short replayable campaigns. It includes concealment, directional cover, class upgrades, bonds, injuries, and permanent losses. Healthy operators can deploy repeatedly; there is no fatigue mechanic.
 
-## Scope and implementation
-
-This slice uses a procedural industrial platform kit with seeded cover variants, six objective rule sets, two enemy archetypes, and a concluding mission. It is designed for replayable short campaigns rather than a full-length commercial campaign. Movement and firing are animated; art is generated from low-poly geometry. No accounts, analytics, external services, or paid assets are used.
-
-- `src/engine.js`: serializable deterministic game rules; no browser dependency.
-- `src/view.js`: Three.js scene, procedural geometry, camera, input picking, animation.
-- `src/app.js`: command interface, mission HUD, campaign save/import/export, sound.
-- `style.css`: desktop and compact layouts.
-- `tests/`: focused rules tests and simulated missions/campaigns using public actions.
-- `build.mjs`: rebuilds the standalone offline HTML from source.
-
-Run `node --test tests/*.test.mjs` for verification. Run `node build.mjs` after changing source files to refresh the offline build.
-
-Run `node tests/playthroughs.mjs` for three reproducible full campaigns with containment, research/counter-threat, and firepower priorities. It writes action records and importable ending saves to `reports/playthroughs` inside this repository. The accompanying `ANALYSIS.md` documents outcomes, turning points, coverage, and limits; these are automated campaign runs using normal game actions. The analysis and chart are historical artifacts and are not regenerated by this command.
-
-Three.js r169 is included under its MIT license in `vendor/THREE-LICENSE.txt`.
+The game uses no accounts, analytics, external services, or paid assets. Three.js r169 is bundled with its [MIT license](vendor/THREE-LICENSE.txt).

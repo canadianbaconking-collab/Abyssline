@@ -1,30 +1,58 @@
-# ABYSSLINE v0.2.1 code review
+# v0.2.1 code review record
 
-Reviewed the campaign rules, tactical actions, save migration/import, UI rendering, and standalone build. Five confirmed bugs were reproduced and fixed. The requested fatigue removal is included in this release.
+[Documentation](docs/README.md) · [Development guide](docs/development.md)
 
-## Findings and fixes
+**Historical release review.** Five confirmed bugs were reproduced and fixed in v0.2.1, alongside removal of fatigue. The verification below records that review; it is not a new exhaustive audit or a guarantee about later changes.
 
-| Priority | Finding | Resolution and regression coverage |
-|---|---|---|
-| P1 | Imported saves could supply unvalidated perk markup, log attributes, report fields, inherited class names, or invalid mission references. Some reached HTML rendering; others could crash the interface or mission resolution. | `validateSave` now checks renderer-facing values, enum ownership, report/log shapes, objective counts, coordinates, and unique/known IDs without throwing. UI callsigns, perks, and casualty names are escaped. Malformed imports are rejected; valid current and legacy saves round-trip. |
-| P2 | A failed operation raised its chosen region from breach 5 to 6 without marking it permanently lost or applying its 12-Stability loss. | Mission failure now closes the region immediately and charges the loss once. Migration repairs affected old saves once, including defeat when Stability reaches zero. A lost region cannot deploy again. |
-| P2 | A friendly depth charge could destroy the Holdout relay, yet an Engineer could repair it before the next enemy phase recorded failure. | Destruction of the relay, a required escort, or the remaining squad resolves failure immediately after the explosive action. A regression verifies that a destroyed relay cannot be repaired afterward. |
-| P2 | A bonded AP transfer let an operator shoot after setting Overwatch while retaining the queued reaction shot. | Valid Fire, Suppress, and depth-charge actions clear the queued Overwatch state. A regression exercises Overwatch → Teamwork → Fire with already active enemies. |
-| P2 | Out-of-grid movement coordinates could alias an in-grid tile through the flattened tile index. | `tileAt` checks integer coordinates and grid bounds. Movement rejects invalid coordinates before looking up the path and does not spend AP. |
+## Resolved findings
 
-References: [rules and validation](src/engine.js), [UI and imports](src/app.js), [review regressions](tests/review.test.mjs).
+### P1 — Malformed imported saves could reach rendering or crash the game
+
+Imported data could contain unvalidated perk markup, log attributes, report fields, inherited class names, or invalid mission references.
+
+**Fix:** `validateSave` checks renderer-facing values, enum ownership, report/log shapes, objective counts, coordinates, and unique/known IDs without throwing. Callsigns, perks, and casualty names are escaped by the interface.
+
+**Regression coverage:** malformed imports are rejected; valid current and legacy saves round-trip.
+
+### P2 — A failed operation could leave a breach-6 region active
+
+Failure could raise a region from breach 5 to 6 without permanently closing it or charging the 12-Stability loss.
+
+**Fix:** failure now marks the region lost immediately and charges once. Migration repairs affected legacy saves once, including defeat at zero Stability. Lost regions cannot deploy again.
+
+### P2 — A destroyed Holdout relay could be repaired before failure registered
+
+A friendly depth charge could destroy the relay, but an Engineer could repair it before the next hostile phase.
+
+**Fix:** destroying the relay, a required escort, or the remaining squad resolves failure immediately after the explosive action. A regression verifies that the destroyed relay cannot be repaired afterward.
+
+### P2 — Teamwork could preserve Overwatch through a manual attack
+
+An operator could set Overwatch, receive a bonded action, and fire while retaining the queued reaction shot.
+
+**Fix:** valid Fire, Suppress, and depth-charge actions clear Overwatch. A regression covers **Overwatch → Teamwork → Fire** with active enemies.
+
+### P2 — Invalid movement coordinates could resolve to a valid tile
+
+Out-of-grid coordinates could alias an in-grid tile through the flattened tile index.
+
+**Fix:** `tileAt` validates integer coordinates and bounds. Movement rejects invalid coordinates before path lookup and spends no AP.
+
+Source references: [rules and validation](src/engine.js), [UI and imports](src/app.js), and [review regressions](tests/review.test.mjs).
 
 ## Fatigue removal
 
-Deployment and aim no longer depend on fatigue. Mission completion no longer adds it, and strategic cycles no longer recover it. Signal watch has no fatigue restriction. New campaigns and recruits omit the field; migration deletes it from both the roster and an active squad while preserving campaign and mission progress.
+Deployment and aim no longer depend on fatigue. Mission completion does not add it, strategic cycles do not recover it, and Signal watch has no fatigue restriction. New campaigns and recruits omit the field. Migration deletes it from the roster and active squad while preserving progress.
 
-The personnel screen shows kills in place of fatigue. Briefings, reports, the field manual, README, design notes, and three-page player guide have been updated. Injuries, reserve status, and Signal watch still affect availability.
+Personnel shows kills in its place. Injuries, reserve status, and Signal watch still affect deployment. The release also updated briefings, reports, the field manual, design notes, and printable player guide.
 
-## Verification
+## Verification recorded for the release
 
-- 75 automated tests pass, including focused regression cases, legacy save migration, deterministic serialization, 30 mission simulations across all six mission types, and a campaign reaching final victory through earned resources and research.
-- JavaScript source and the generated standalone script pass syntax checks.
-- The rebuilt standalone HTML runs in the in-app browser. Personnel shows six KILLS statistics with no fatigue, tired, or exhausted labels. The manual is revision 03 and the build stamp is v0.2.1.
-- The updated player guide is exactly three pages; every rendered page was visually checked for clipping and layout defects.
+| Check | Recorded result |
+|---|---|
+| Automated suite | 75 tests passed, including review regressions, legacy migration, deterministic serialization, 30 mission simulations across all six regular types, and an earned-resource campaign to final victory. |
+| Syntax | JavaScript source and generated standalone script passed syntax checks. |
+| Browser | Rebuilt standalone HTML ran in the review browser; Personnel displayed kills without fatigue labels, manual revision 03, and v0.2.1 build stamp. |
+| Printable player guide | Three pages; every rendered page checked for clipping and layout defects. |
 
-These checks establish the reviewed behaviors and campaign completion. They do not establish balance across every seed, nor constitute a performance audit or exhaustive browser compatibility test.
+These checks establish the reviewed behaviors and campaign completion. They do not establish balance across every seed, performance, or exhaustive browser compatibility. For reproducible commands, see [Verify a change](docs/development.md#verify-a-change).

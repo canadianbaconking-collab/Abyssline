@@ -1,51 +1,80 @@
-# ABYSSLINE v0.2.1 — XCOM 2 / War of the Chosen analysis and revision
+# Design notes: tactical commitment and campaign pressure
 
-The most useful lesson is that a tactical choice should have consequences beyond the current shot. This pass strengthens three connections: position to action commitment, information to engagement timing, and soldier development to campaign availability. ABYSSLINE keeps its own ocean crisis, noise, flooding, escort, sabotage and extraction rules.
+[Documentation](docs/README.md) · [Player rules](docs/guides/player-guide.md)
 
-## What makes XCOM 2 work
+**Status:** implemented v0.2.1 systems, followed by design interpretation and possible future work. This document explains why the systems exist; use the player guide for rules and controls.
 
-XCOM 2 gives soldiers two action points, distinguishes a single move from a dash, uses concealment to support ambushes, and makes directional cover and flanking matter. Its targeting interface exposes hit, damage and critical information. Dark Events connect mission selection to enemy advantages. These are documented in [Feral's official XCOM 2 manual](https://www.feralinteractive.com/en/manuals/xcom2/latest/steam/).
+## The central design problem
 
-My design interpretation: the tension comes from sequencing under incomplete information. Spending movement to discover the next threat can leave too little capacity to answer it. Defensive position, ammunition and action order must therefore compete with objective speed. A percentage becomes interesting when the player has alternatives: improve the angle, suppress, spend a limited explosive, or accept the risk to preserve a resource.
+A tactical choice should matter beyond the current shot. ABYSSLINE connects three decisions:
 
-The previous ABYSSLINE slice had two actions, but firing cost only one. That allowed two shots from every stationary soldier and allowed a soldier to fire before retreating. There was little distinction between an opening shot and a finishing action. Enemies also woke individually, so exploration lacked a clear change from patrol to engagement.
+- **Position and commitment:** moving spends actions you may need to fight or extract.
+- **Information and timing:** discovering another enemy group changes when it is safe to engage.
+- **Veterans and availability:** injuries, bonds, and assignments change which team you can field next.
 
-## What War of the Chosen adds
+The ocean setting adds its own pressures: noise attracts reinforcements, flooding changes safe routes, escorts slow extraction, and helping one region leaves others exposed.
 
-WotC layers soldier bonds, faction hero classes, Covert Actions, Resistance Orders, mission SITREPs and the Chosen onto the campaign. Bonds provide tactical benefits; Covert Actions compete for personnel; the Chosen have distinctive strengths, weaknesses and strategic interference, with strongholds that let the player end their threat. These are features described in the [official expansion overview](https://store.steampowered.com/app/593380/XCOM_2_War_of_the_Chosen/).
+## What changed in this revision
 
-My interpretation: WotC's strongest contribution is making a roster into a network of commitments. A useful soldier is valuable for their capabilities, relationships and availability. A powerful pair creates attachment, but using that pair constantly narrows the rest of the roster. Additional assignments make a spare operator useful even when they are not in the tactical squad. Distinctive recurring opponents also give the campaign a personal rhythm that a global meter alone cannot create.
+Earlier builds allowed a shot for one action, letting stationary operators fire twice or shoot before retreating. Enemies activated individually, and progression relied on injuries plus a generic accuracy-or-health upgrade. The revision strengthens action sequencing, group encounters, veteran development, and regional choices.
 
-ABYSSLINE's earlier roster had injuries and a generic accuracy-or-health promotion. That provided persistence but weak reasons to develop reserves or distinguish veterans within a class. Region choice mostly compared breach urgency and mission rewards. This revision adds explicit counter-threat opportunities and personnel tradeoffs.
-
-## Implemented changes
-
-| System | Revised behavior | Decision it creates |
+| Implemented system | Current behavior | Intended decision |
 |---|---|---|
-| Action commitment | Fire, Suppress, Brace, Overwatch and depth charges consume remaining AP. Other abilities, reload, interaction and extraction cost 1. | Position before attacking; a dash sacrifices offense. A bond transfer can intentionally reopen an operator's turn. |
-| Concealed insertion | All missions except Holdout and final descent begin concealed. Detection checks the complete movement route within 3 tiles and line of sight. Attacks, objectives and noise 4+ reveal the squad. | Stage an ambush or advance carefully; a patrol can discover a stationary squad. |
-| Enemy groups | Encountered groups activate together and scatter toward cover. Prepared Overwatch can react to this movement. Groups activated during the enemy phase do not attack in that same phase. | Bringing another group into view changes the problem for the whole squad. |
-| Criticals and explosives | Exposed targets have a 35% critical chance for +2 damage. Every operator carries one radius-1 depth charge: 4 guaranteed damage, low-cover destruction, range 6 and +5 noise. Friendly fire applies. | Spend a limited certainty tool, improve a firing lane, or preserve the charge and take a shot. |
-| Personnel availability | Wounds, reserve status and Signal watch assignments determine deployment. Roster capacity is 12. Fatigue was removed in v0.2.1. | Recruit, manage injuries, and choose which operators to assign away from the squad. |
-| Bonds | Two shared returns unlock a mutually exclusive pair bond. Teamwork transfers 1 AP to the deployed partner, capped at 2 AP; once per pair per mission. | Keep a pair together, separate them for roster coverage, or save their transfer for extraction. |
-| Class doctrines | At 8 XP, each of six classes chooses one of two permanent, functional upgrades. The original 4-XP specialization remains. | Twelve class-specific options develop movement, criticals, reaction fire, healing, vision, remote support and supplies. |
-| Signal watch | One available operator can take a two-cycle assignment, becoming unavailable to deploy and returning with 2 XP and 18 Signal. | Trade current squad strength for research and reserve development. |
-| Regional threats | Win in the flagged region within three cycles to prevent a modifier on the next two operations. Effects are extra hostile HP, extra enemy aim, or faster timed reinforcements. | Choose between a counter-threat, a threatened region, a resource reward and a mission your available team can handle. |
+| Action commitment | Fire, Suppress, Brace, Overwatch, and depth charges spend remaining AP. | Position before attacking; a dash gives up immediate offense. |
+| Concealed insertion | Most missions start concealed. Detection checks the movement route; attacks, objectives, and noise 4+ reveal the squad. | Prepare an opening or trade concealment for speed. |
+| Enemy groups | Encountered groups activate and scatter together. Prepared Overwatch can react. Groups activated during the hostile phase do not attack that phase. | Decide whether the squad can handle another engagement. |
+| Criticals and explosives | Exposed targets allow criticals. Limited depth charges deal guaranteed damage, destroy low cover, add noise, and permit friendly fire. | Improve an angle, spend a limited resource, or risk an uncertain shot. |
+| Personnel availability | Injuries, reserve status, and Signal watch affect deployment. Living roster capacity is 12; no fatigue. | Balance today's squad against recovery and assignments. |
+| Bonds | Two shared returns allow a mutual bond; Teamwork transfers one action once per pair per mission. | Keep partners together and choose when an extra action matters most. |
+| Class doctrines | At 8 XP, each class chooses one of two permanent upgrades. The 4-XP accuracy/health choice remains. | Develop distinct veterans within the same role. |
+| Signal watch | One operator is unavailable for two cycles, then returns with 18 Signal and 2 XP. | Trade immediate squad strength for research resources and reserve development. |
+| Regional threats | A flagged mission prevents a timed modifier; missing it affects the next two operations. | Weigh threat prevention against breach urgency, rewards, and squad readiness. |
 
-## Reading the new campaign
+Fatigue was removed in v0.2.1. Healthy veterans can deploy repeatedly at full accuracy. Valid legacy saves migrate in place; old fatigue fields are discarded. An already active legacy mission stays revealed, while new insertions use the revised concealment rules.
 
-Suppose North Atlantic is at breach 5 while Indian Ocean offers research Signal and counters Hardened shells. Going east risks losing North Atlantic; going north allows the enemy modifier to mature. Emergency containment may buy enough time to take the counter-threat, but spends Material that could recruit a fresh operator. Sending an experienced Engineer may shorten the mission, while sending a replacement allows that veteran to recover. These systems now change the value of the same mission from one cycle to another.
+## How the systems connect
 
-A useful combat sequence is to scout, stage Overwatch, move the objective specialist, then commit the opening attack. After activation, inspect cover and available actions before firing the remaining weapons. Save the bonded transfer for an operator who needs to reload and attack, finish an objective, or reach extraction.
+### At Command
 
-## Scope and remaining differences
+North Atlantic is at breach 5. Indian Ocean offers research Signal and counters Hardened shells. Going east risks losing North Atlantic; going north allows the modifier to mature.
 
-This is a substantial revision of a short playable campaign, not a full reproduction of WotC. It does not yet have recurring named nemeses, faction diplomacy, a base construction layer, vertical traversal, a large enemy bestiary, or multi-rank ability trees. Signal watch is a deterministic support assignment, not WotC's complete covert-operation system. There is no fatigue mechanic. Depth charges destroy low cover, not structural walls.
+Emergency containment can buy time to do both, but spends Material that could recruit an operator. An experienced Engineer can simplify the objective, while assigning that operator to Signal watch provides future Signal and XP at the cost of immediate availability.
 
-The next major expansion would benefit most from a recurring ocean adversary with a telegraphed ability, a campaign-level interference effect, and an objective-driven way to permanently defeat it. That would connect the existing regional pressure and veteran progression to a memorable midgame opponent. It is deliberately outside this implemented pass.
+The intended effect is that a mission's value changes with the campaign state, rather than remaining a fixed reward comparison.
 
-## Validation and compatibility
+### On the deck
 
-The revision adds focused checks for action commitment, detection along paths, group ambushes, friendly-fire explosives, bonds, support assignments, event deadlines, doctrines and legacy saves, including removal of old fatigue data. Simulations exercise all six mission types and an earned-resource campaign through final victory. The campaign simulation recruits and advances time when injuries deplete the roster and researches final coordinates after the required two projects.
+A useful opening is to scout, stage Overwatch, position the objective specialist, then commit the first attack. After enemies activate, reassess cover and actions before firing the remaining weapons.
 
-Existing saves migrate in place. An operation already underway stays revealed; a new mission receives the new insertion rules. The offline HTML, in-game manual and three-page player guide are updated together. Browser checks cover support assignment, recruit deployment, concealment, sonar, movement, explosive preview and detonation. These checks establish functionality; they do not establish balance across every seed or player strategy.
+A bonded transfer can reopen a turn for reloading and attacking, finishing an objective, or extracting. Loud guaranteed damage may solve the current turn while attracting a stronger later threat. Those are tradeoffs the player can plan around.
+
+## Inspiration and interpretation
+
+XCOM 2 and War of the Chosen informed this revision. Reference material: [official XCOM 2 manual](https://www.feralinteractive.com/en/manuals/xcom2/latest/steam/) and [official expansion overview](https://store.steampowered.com/app/593380/XCOM_2_War_of_the_Chosen/).
+
+**Design interpretation:** sequencing under incomplete information makes action points meaningful. Accuracy becomes interesting when the player can change the angle, suppress a survivor, spend an explosive, or conserve a resource. Roster relationships and competing assignments add value to an operator beyond their current weapon statistics.
+
+ABYSSLINE applies those ideas to a short ocean-crisis campaign. Signal watch is a deterministic support assignment; depth charges destroy low cover. The prototype has six objective rule sets, two enemy archetypes, seeded procedural cover, and a concluding mission.
+
+## What the evidence supports
+
+The [v0.2.1 review](CODE-REVIEW.md) records regression coverage for action commitment, save handling, and other fixes. The [campaign report](reports/playthroughs/ANALYSIS.md) records two victories and one defeat from three automated policies on different seeds.
+
+Those runs demonstrate connected campaign progression and meaningful consequences. They also found high casualties in victories, surplus Signal without faster research, and a poorly prepared final descent. Different seeds and several policy differences prevent causal claims about any single strategy or upgrade. The runs do not establish balance across seeds or human-player usability.
+
+## Proposed work, not implemented
+
+The current prototype has no recurring named nemesis, faction diplomacy, base construction, vertical traversal, large enemy roster, or multi-rank ability trees.
+
+A possible major expansion is a **recurring ocean adversary** with a readable tactical ability, campaign interference, and an objective-driven way to end its threat. That could connect regional pressure and veteran progression to a memorable midgame opponent. This remains a proposal.
+
+Nearer-term recommendations from the campaign evidence:
+
+1. Make casualties conspicuous even when an operation succeeds.
+2. Warn before the last operator leaves with an unfinished escort.
+3. Explain escalation from acoustic reinforcements to Brutes.
+4. Show final-descent squad composition and readiness clearly.
+5. Test objective-runner survivability and class XP with paired seeds and stronger tactics.
+6. Explore useful midgame Signal spending and research alternatives.
+
+These priorities are candidates for future work, not a committed implementation schedule.
